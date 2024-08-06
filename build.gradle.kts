@@ -18,16 +18,20 @@ repositories {
 }
 
 dependencies {
+    implementation("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
     // Версии зависимостей могут отличаться
     // Здесь мы сразу подключаем зависимости,
     // которые понадобятся во время обучения
     implementation("io.javalin:javalin:6.1.3")
     implementation("org.slf4j:slf4j-simple:2.0.7")
+    implementation("gg.jte:jte:3.1.9")
     implementation("io.javalin:javalin-rendering:6.1.3")
     implementation("gg.jte:jte:3.1.9")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
+
 
 tasks.test {
     useJUnitPlatform()

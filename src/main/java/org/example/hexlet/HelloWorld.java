@@ -1,20 +1,30 @@
 package org.example.hexlet;
 
 import io.javalin.Javalin;
+import io.javalin.rendering.template.JavalinJte;
+import static io.javalin.rendering.template.TemplateUtil.model;
+import org.example.hexlet.model.Course;
+import org.example.hexlet.dto.courses.CoursesPage;
+
+import java.util.ArrayList;
+
 
 public class HelloWorld {
     public static void main(String[] args) {
-        // Создаем приложение
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
+            config.fileRenderer(new JavalinJte());
         });
-        // Описываем, что загрузится по адресу /
 
-        app.get("/users", ctx -> {
-                var name = ctx.queryParamAsClass("name", String.class).getOrDefault("World");
-                ctx.result("Hello, " + name + "!");
+        app.get("/courses", ctx -> {
+            var courses = new ArrayList<Course>();
+            courses.add(new Course("Java", "Описание"));
+            courses.add(new Course("HTML", "Описание"));
+            var header = "Курсы по программированию";
+            var page = new CoursesPage(courses, header);
+            ctx.render("courses/index.jte", model("page", page));
         });
-        app.post("/users1", ctx -> ctx.result("POST /users1"));
+
         app.start(7070);
     }
 }
